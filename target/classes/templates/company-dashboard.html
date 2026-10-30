@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard - CareerConnect</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav class="navbar dashboard-nav">
+    <div class="brand">CareerConnect</div>
+    <div>
+        <span class="welcome">Welcome, <b th:text="${name}">Company</b></span>
+        <a href="/logout" class="btn btn-outline">Logout</a>
+    </div>
+</nav>
+
+<main class="dashboard-container">
+
+    <section class="page-heading">
+        <div>
+            <span class="eyebrow">COMPANY PORTAL</span>
+            <h1>Company Dashboard</h1>
+            <p class="muted" th:text="${company.industry}">Software & IT</p>
+        </div>
+    </section>
+
+    <section class="profile-banner">
+        <div>
+            <h2 th:text="${company.company_name}">TechNova Solutions</h2>
+            <p th:text="${company.website}">https://example.com</p>
+        </div>
+    </section>
+
+    <section class="section-block">
+        <h2>Post a New Job</h2>
+
+        <form method="post" action="/jobs/add" class="form-grid">
+            <div>
+                <label>Job Title</label>
+                <input name="title" required>
+            </div>
+
+            <div>
+                <label>Location</label>
+                <input name="location" required>
+            </div>
+
+            <div>
+                <label>Package (LPA)</label>
+                <input name="package_lpa" type="number" step="0.01" required>
+            </div>
+
+            <div>
+                <label>Minimum CGPA</label>
+                <input name="min_cgpa" type="number" step="0.01" min="0" max="10" required>
+            </div>
+
+            <div>
+                <label>Deadline</label>
+                <input name="deadline" type="date" required>
+            </div>
+
+            <div>
+                <label>Skills Required</label>
+                <input name="skills_required" placeholder="Java, SQL, Spring Boot" required>
+            </div>
+
+            <div class="full-span">
+                <label>Description</label>
+                <textarea name="description" rows="4" required></textarea>
+            </div>
+
+            <div class="full-span">
+                <button class="btn btn-primary" type="submit">Publish Job</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="section-block">
+        <h2>My Job Openings</h2>
+
+        <div class="job-grid">
+            <div class="job-card" th:each="j : ${jobs}">
+                <div class="job-top">
+                    <span class="status" th:text="${j.status}">OPEN</span>
+                    <span th:text="${j.location}">Pune</span>
+                </div>
+
+                <h3 th:text="${j.title}">Job</h3>
+                <p th:text="${j.description}">Description</p>
+
+                <div class="job-meta">
+                    <span>₹ <b th:text="${j.package_lpa}">6.50</b> LPA</span>
+                    <span>Applicants: <b th:text="${j.applicant_count}">0</b></span>
+                </div>
+
+                <form method="post" th:action="@{/jobs/{id}/close(id=${j.id})}">
+                    <button class="btn btn-danger" type="submit"
+                            th:if="${j.status == 'OPEN'}">Close Job</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-block">
+        <h2>Applicants</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Email</th>
+                    <th>Job</th>
+                    <th>CGPA</th>
+                    <th>Skills</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="a : ${applicants}">
+                    <td th:text="${a.student_name}">Student</td>
+                    <td th:text="${a.email}">Email</td>
+                    <td th:text="${a.job_title}">Job</td>
+                    <td th:text="${a.cgpa}">8.7</td>
+                    <td th:text="${a.skills}">Java</td>
+                    <td><span class="status" th:text="${a.status}">APPLIED</span></td>
+                    <td>
+                        <form method="post"
+                              th:action="@{/application/{id}/status(id=${a.id})}">
+                            <select name="status">
+                                <option value="APPLIED">Applied</option>
+                                <option value="SHORTLISTED">Shortlisted</option>
+                                <option value="INTERVIEW">Interview</option>
+                                <option value="SELECTED">Selected</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                            <button class="btn btn-small" type="submit">Save</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(applicants)}">
+                    <td colspan="7" class="empty">No applicants yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+    <script src="/app.js"></script>
+</body>
+</html>

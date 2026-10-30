@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerConnect - Student Placement Management System</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand">CareerConnect</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/register" class="btn btn-outline">Register</a>
+        <a href="/login" class="btn btn-primary">Login</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">STUDENT PLACEMENT MANAGEMENT SYSTEM</span>
+        <h1>Build your career with <span>CareerConnect</span></h1>
+        <p>
+            A simple platform connecting students, companies and placement
+            administrators in one place.
+        </p>
+        <div class="hero-actions">
+            <a href="/login" class="btn btn-primary btn-large">Login</a>
+            <a href="/register" class="btn btn-outline btn-large">Register</a>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat-card">
+        <strong th:text="${jobCount}">0</strong>
+        <span>Open Jobs</span>
+    </div>
+    <div class="stat-card">
+        <strong th:text="${studentCount}">0</strong>
+        <span>Students</span>
+    </div>
+    <div class="stat-card">
+        <strong th:text="${companyCount}">0</strong>
+        <span>Companies</span>
+    </div>
+    <div class="stat-card">
+        <strong th:text="${placementCount}">0</strong>
+        <span>Selected Placements</span>
+    </div>
+</section>
+
+<section class="info-section">
+    <h2>One platform for the complete placement process</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Student Portal</h3>
+            <p>View opportunities, apply for eligible jobs and manage your profile.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Company Portal</h3>
+            <p>Create job openings, view applicants and update application status.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Admin Portal</h3>
+            <p>Monitor students, companies, jobs and placement applications.</p>
+        </div>
+    </div>
+</section>
+
+<footer>© 2026 CareerConnect - Student Placement Management System</footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>
